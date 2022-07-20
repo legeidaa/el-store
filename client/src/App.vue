@@ -1,6 +1,6 @@
 <template>
-	<div>
-		<nav-bar :getPaths="getPaths()"  />
+	<div class="page-wrapper">
+		<nav-bar :getPaths="getPaths()" />
 		<router-view></router-view>
 	</div>
 </template>

@@ -1,19 +1,20 @@
 import { ADMIN_ROUTE, AUTH_ROUTE, BASKET_ROUTE, DEVICE_ROUTE, REGISTRATION_ROUTE } from '@/utils/consts'
 import { createRouter, createWebHistory } from 'vue-router'
-import store from '../store/index'
+// import store from '../store/index'
 
 
-function checkAdminRights(to, from, next) {
+/* function checkAdminRights(to, from, next) {
     // check if the user is admin
 
     let userIsAdmin = store.getters.getIsAuth
+    console.log();
     if (userIsAdmin) {
         next({ path: '/adminroute' });
 
     } else {
         next({ path: '/nonadminroute' });
     }
-}
+} */
 
 
 const publicRoutes = [{
@@ -53,7 +54,7 @@ const adminRoutes = [{
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: () => import( /* webpackChunkName: "about" */ '../pages/AdminPage.vue'),
-        beforeEnter: checkAdminRights,
+        // beforeEnter: checkAdminRights,
         meta: { requiresAuth: true }
     },
 
@@ -62,7 +63,6 @@ const adminRoutes = [{
         name: 'Basket',
         component: () => import('../pages/BasketPage.vue'),
         beforeEnter: () => {
-            // reject the navigation
             return false
         },
         meta: { requiresAuth: true }
