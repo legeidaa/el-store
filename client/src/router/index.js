@@ -1,12 +1,15 @@
 import { ADMIN_ROUTE, AUTH_ROUTE, BASKET_ROUTE, DEVICE_ROUTE, REGISTRATION_ROUTE } from '@/utils/consts'
 import { createRouter, createWebHistory } from 'vue-router'
+import store from '../store/index'
 
-let userIsAdmin = false
 
 function checkAdminRights(to, from, next) {
     // check if the user is admin
+
+    let userIsAdmin = store.getters.getIsAuth
     if (userIsAdmin) {
         next({ path: '/adminroute' });
+
     } else {
         next({ path: '/nonadminroute' });
     }
@@ -29,11 +32,12 @@ const publicRoutes = [{
         name: 'Registration',
         component: () => import('../pages/AuthPage.vue')
     },
+
     {
         // path: DEVICE_ROUTE + '/:id?',
         path: DEVICE_ROUTE,
         name: 'Device',
-        component: () => import('../pages/DevicePage.vue'),
+        // component: () => import('../pages/DevicePage.vue'),
         children: [{
             path: DEVICE_ROUTE + '/:id',
             name: 'Specific Device',
@@ -51,8 +55,8 @@ const adminRoutes = [{
         component: () => import( /* webpackChunkName: "about" */ '../pages/AdminPage.vue'),
         beforeEnter: checkAdminRights,
         meta: { requiresAuth: true }
-
     },
+
     {
         path: BASKET_ROUTE,
         name: 'Basket',
@@ -63,6 +67,7 @@ const adminRoutes = [{
         },
         meta: { requiresAuth: true }
     },
+
 ]
 
 export const routes = [
@@ -71,10 +76,18 @@ export const routes = [
     ...publicRoutes,
     //только для авторизованных пользователей
     ...adminRoutes,
+
+    // {
+    //     path: '/:catchAll(.*)',
+    //     redirect: to => {
+    //         return { path: '/', query: { q: to.params.searchText } }
+    //     },
+    // },
 ]
 
 const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
-    routes
+    routes,
+    linkActiveClass: 'active'
 })
 export default router

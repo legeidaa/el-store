@@ -1,0 +1,35 @@
+@import 'bootstrap-reboot';
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700&display=swap');
+
+body {
+    font-family: 'Lato', sans-serif;
+}
+
+* {
+    &::placeholder {
+        transition: opacity .2s ease
+    }
+
+    &:focus {
+        &::placeholder {
+            opacity: 0;
+        }
+    }
+
+}
+
+a {
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: none;
+    }
+}
+
+.container {
+    width: 90vw;
+    margin: 0 auto;
+}
+
+
+@import 'components/common/_navbar.scss';
